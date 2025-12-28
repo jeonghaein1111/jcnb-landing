@@ -1,314 +1,628 @@
 <!DOCTYPE html>
-<html lang="ko" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JCNB | 해외 소득자 전용 행정 솔루션</title>
+    <title>JCNB | Global HR & Tax Management Firm</title>
+    <meta name="description" content="Global HR & Tax Management Firm specialized in Korean Market.">
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+    <!-- Google Fonts: Inter (Global), Noto Sans variants for Asian languages -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans KR', 'Noto Sans JP', 'Noto Sans SC', 'sans-serif'],
+                    },
+                    colors: {
+                        navy: {
+                            950: '#020617',
+                            900: '#0f172a', // Brand Base
+                            800: '#1e293b',
+                            700: '#334155',
+                        },
+                        brand: {
+                            blue: '#3b82f6', // Accent
+                            text: '#cbd5e1', // Slate 300
+                            muted: '#64748b' // Slate 500
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        body { font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif; }
-        .bg-navy { background-color: #0a1128; }
-        .bg-navy-light { background-color: #111b36; }
-        .text-gold { color: #d4af37; }
-        .bg-gold { background-color: #d4af37; }
-        .border-gold { border-color: #d4af37; }
-        .glass { background: rgba(10, 17, 40, 0.95); backdrop-filter: blur(10px); }
-        .lang-btn { opacity: 0.5; transition: 0.3s; }
-        .lang-btn.active { opacity: 1; color: #d4af37; font-weight: 700; text-decoration: underline; }
+        /* Custom Styles */
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+        
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .hero-overlay {
+            background: linear-gradient(to top, #0f172a 15%, rgba(15, 23, 42, 0.7) 100%);
+        }
+
+        .service-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: #3b82f6;
+            background-color: rgba(30, 41, 59, 0.6);
+            box-shadow: 0 10px 40px -10px rgba(59, 130, 246, 0.15);
+        }
+
+        /* Language Switcher Active State */
+        .lang-btn.active {
+            color: #3b82f6;
+            font-weight: 700;
+        }
+        .lang-btn:hover {
+            color: #60a5fa;
+        }
     </style>
 </head>
-<body class="bg-navy text-white leading-relaxed">
+<body class="antialiased font-sans">
 
-    <!-- Header -->
-    <header class="fixed w-full z-50 glass border-b border-white/10">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="text-2xl font-bold tracking-tighter text-gold cursor-pointer" onclick="window.scrollTo(0,0)">JCNB</div>
-            <nav class="hidden md:flex space-x-8 text-sm font-medium text-gray-300">
-                <a href="#about" data-i18n="nav_about" class="hover:text-gold transition-colors">서비스 소개</a>
-                <a href="#targets" data-i18n="nav_targets" class="hover:text-gold transition-colors">대상 유형</a>
-                <a href="#process" data-i18n="nav_process" class="hover:text-gold transition-colors">프로세스</a>
-                <a href="#faq" data-i18n="nav_faq" class="hover:text-gold transition-colors">FAQ</a>
-            </nav>
-            <div class="flex items-center space-x-6">
-                <div class="flex space-x-2 text-xs border-r border-white/20 pr-6">
-                    <button onclick="changeLanguage('ko')" id="lang-ko" class="lang-btn active">KR</button>
-                    <span class="text-gray-600">|</span>
-                    <button onclick="changeLanguage('en')" id="lang-en" class="lang-btn">EN</button>
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <span class="text-2xl font-bold tracking-tight text-white">JCNB<span class="text-brand-blue">.</span></span>
                 </div>
-                <a href="#contact" data-i18n="btn_consult" class="bg-gold text-navy px-5 py-2.5 rounded-sm font-bold text-sm hover:brightness-110 transition-all">상담 신청하기</a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#services" id="nav-services" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Services</a>
+                    <a href="#why-us" id="nav-why" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Why Us</a>
+                    <a href="#contact" id="nav-contact" class="px-5 py-2.5 text-sm font-medium text-white bg-brand-blue hover:bg-blue-600 rounded-full transition-colors shadow-lg shadow-blue-900/50">Contact Us</a>
+                    
+                    <!-- Language Switcher -->
+                    <div class="flex items-center space-x-3 border-l border-slate-700 pl-6 text-xs font-medium text-slate-400">
+                        <button onclick="setLanguage('en')" class="lang-btn active" id="btn-en">EN</button>
+                        <button onclick="setLanguage('ko')" class="lang-btn" id="btn-ko">KR</button>
+                        <button onclick="setLanguage('ja')" class="lang-btn" id="btn-ja">JP</button>
+                        <button onclick="setLanguage('zh')" class="lang-btn" id="btn-zh">CN</button>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center gap-4">
+                    <div class="flex items-center space-x-2 text-xs font-bold text-slate-400">
+                        <button onclick="setLanguage('en')" class="lang-btn active" id="btn-en-m">EN</button>
+                        <span>|</span>
+                        <button onclick="setLanguage('ko')" class="lang-btn" id="btn-ko-m">KR</button>
+                    </div>
+                    <button id="mobile-menu-btn" class="text-slate-300 hover:text-white focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-navy-900 border-b border-slate-800 absolute w-full">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="#services" id="nav-services-m" class="block px-3 py-2 text-base font-medium text-slate-300 hover:text-white">Services</a>
+                <a href="#why-us" id="nav-why-m" class="block px-3 py-2 text-base font-medium text-slate-300 hover:text-white">Why Us</a>
+                <a href="#contact" id="nav-contact-m" class="block px-3 py-2 text-base font-medium text-brand-blue">Contact Us</a>
+                <div class="pt-4 border-t border-slate-800 flex gap-4 px-3">
+                    <button onclick="setLanguage('ja')" class="text-sm text-slate-400 hover:text-white">日本語</button>
+                    <button onclick="setLanguage('zh')" class="text-sm text-slate-400 hover:text-white">中文</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative min-h-screen flex items-center justify-center pt-20">
+        <!-- Background Image -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop" 
+                 alt="Modern Corporate Building" 
+                 class="w-full h-full object-cover opacity-30">
+            <div class="absolute inset-0 hero-overlay"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-900/30 border border-blue-500/30 text-blue-400 text-xs font-semibold tracking-wider mb-8 uppercase animate-fade-in-up">
+                <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                Global HR & Tax Management
+            </div>
+            
+            <h1 id="hero-title" class="text-4xl md:text-6xl font-bold text-white tracking-tight mb-6 leading-tight max-w-5xl mx-auto">
+                Your Strategic Partner for Korea:<br/>
+                <span class="text-brand-blue">Seamless Employment & Tax Compliance</span>
+            </h1>
+
+            <p id="hero-subtitle" class="mt-4 text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mb-10 leading-relaxed font-light">
+                We empower global companies to hire talent in Korea without a local entity, and manage foreign income for individuals with bespoke solutions.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#b2b" id="hero-cta-b2b" class="px-8 py-4 text-base font-semibold text-white bg-brand-blue rounded-lg hover:bg-blue-600 transition-all shadow-lg shadow-blue-900/50">
+                    For Companies (B2B)
+                </a>
+                <a href="#b2c" id="hero-cta-b2c" class="px-8 py-4 text-base font-semibold text-white bg-slate-800 border border-slate-700 rounded-lg hover:bg-slate-700 transition-all">
+                    For Individuals (B2C)
+                </a>
             </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="relative pt-32 pb-20 md:pt-52 md:pb-40 overflow-hidden text-center">
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <h2 data-i18n="hero_tag" class="inline-block border border-gold/50 text-gold px-4 py-1 rounded-full text-xs md:text-sm mb-6 uppercase tracking-widest">해외 소득자 전용 행정 에이전시</h2>
-            <h1 data-i18n="hero_title" class="text-4xl md:text-6xl font-extrabold mb-8 leading-tight text-white">해외 소득은 있는데 <br class="hidden md:block"> 국내 직업이 없으신가요?</h1>
-            <p data-i18n="hero_desc" class="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto">프리랜서 건보료 절감부터 고소득자 자산 형성까지. <br> JCNB가 당신의 완벽한 <strong>'국내 신분'</strong>을 설계해드립니다.</p>
-            <a href="#contact" data-i18n="hero_btn" class="bg-gold text-navy px-8 py-4 rounded-sm font-bold text-lg hover:scale-105 transition-transform shadow-xl inline-block">내 예상 건보료/세금 진단하기</a>
-        </div>
-    </section>
-
-    <!-- Section 1: Service Intro (Pain Points) -->
-    <section id="about" class="py-24 bg-navy-light">
-        <div class="max-w-7xl mx-auto px-6">
+    <!-- Services Section -->
+    <section id="services" class="py-24 bg-navy-900 relative">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h3 data-i18n="pain_title" class="text-3xl font-bold mb-4">해외 소득자, 이런 고민 있으시죠?</h3>
-                <div class="w-12 h-1 bg-gold mx-auto"></div>
+                <h2 id="section-expertise-title" class="text-3xl font-bold text-white">Our Expertise</h2>
+                <div class="w-16 h-1 bg-brand-blue mx-auto mt-4 rounded-full"></div>
             </div>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="p-8 bg-navy border border-white/10 rounded-xl hover:border-gold/50 transition-colors">
-                    <h4 data-i18n="pain_1_t" class="text-xl font-bold mb-4 text-gold">건강보험료 폭탄</h4>
-                    <p data-i18n="pain_1_d" class="text-gray-400 text-sm leading-relaxed">국내 소득 증빙이 없어 지역가입자로 분류되어, 해외 소득 대비 과도한 보험료를 납부 중인 경우.</p>
-                </div>
-                <div class="p-8 bg-navy border border-white/10 rounded-xl hover:border-gold/50 transition-colors">
-                    <h4 data-i18n="pain_2_t" class="text-xl font-bold mb-4 text-gold">대출/카드 발급 거절</h4>
-                    <p data-i18n="pain_2_d" class="text-gray-400 text-sm leading-relaxed">억대 연봉이라도 국내 소득 원천이 불분명하여 금융권 활동 및 신용 관리가 불가능한 경우.</p>
-                </div>
-                <div class="p-8 bg-navy border border-white/10 rounded-xl hover:border-gold/50 transition-colors">
-                    <h4 data-i18n="pain_3_t" class="text-xl font-bold mb-4 text-gold">세무 조사 공포</h4>
-                    <p data-i18n="pain_3_d" class="text-gray-400 text-sm leading-relaxed">외화 입금 내역은 쌓여가는데 합법적인 자산 증빙과 신고 방법을 몰라 막연히 불안하신 경우.</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Section 2: Target Types -->
-    <section id="targets" class="py-24 bg-navy">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h3 data-i18n="target_title" class="text-3xl font-bold mb-4">귀하의 상황에 맞는 솔루션을 선택하세요.</h3>
-                <p data-i18n="target_desc" class="text-gray-400">JCNB는 각 고객의 소득 구조에 최적화된 시나리오를 제공합니다.</p>
-            </div>
-            <div class="grid md:grid-cols-2 gap-10">
-                <!-- Type A -->
-                <div class="group p-10 border-2 border-gold/20 rounded-2xl hover:border-gold transition-all bg-navy-light relative overflow-hidden">
-                    <span class="text-gold font-bold text-sm tracking-widest uppercase">Type A</span>
-                    <h4 data-i18n="target_a_t" class="text-2xl font-bold mt-4 mb-6 text-white">프리랜서 / 디지털 노마드</h4>
-                    <ul data-i18n="target_a_list" class="space-y-4 text-gray-300 text-sm md:text-base">
-                        <li class="flex items-start"><span class="text-gold mr-2">✓</span> 지역가입자 탈출 및 건강보험 직장가입자 취득</li>
-                        <li class="flex items-start"><span class="text-gold mr-2">✓</span> 국내 소득 증빙을 통한 신용등급 및 대출 관리</li>
-                        <li class="flex items-start"><span class="text-gold mr-2">✓</span> 합법적인 절세 및 1인 기업 행정 대행</li>
-                    </ul>
-                </div>
-                <!-- Type B -->
-                <div class="group p-10 border-2 border-gold/20 rounded-2xl hover:border-gold transition-all bg-navy-light relative overflow-hidden">
-                    <span class="text-gold font-bold text-sm tracking-widest uppercase">Type B</span>
-                    <h4 data-i18n="target_b_t" class="text-2xl font-bold mt-4 mb-6 text-white">주재원 / 해외 고소득자</h4>
-                    <ul data-i18n="target_b_list" class="space-y-4 text-gray-300 text-sm md:text-base">
-                        <li class="flex items-start"><span class="text-gold mr-2">✓</span> 자금 출처 소명 및 해외 자산의 국내 양성화</li>
-                        <li class="flex items-start"><span class="text-gold mr-2">✓</span> 국내 부동산 취득을 위한 행정 증빙 기반 마련</li>
-                        <li class="flex items-start"><span class="text-gold mr-2">✓</span> 가족 동반 건강보험 혜택 및 연금 관리</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section 3: Why JCNB (Comparison) - Color Unified -->
-    <section class="py-24 bg-navy-light border-y border-white/5">
-        <div class="max-w-5xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h3 class="text-3xl md:text-4xl font-bold mb-6">
-                    <span data-i18n="comp_title_1" class="text-gold">세무사가 아닙니다.</span> <br class="md:hidden"> 
-                    <span data-i18n="comp_title_2" class="text-white">비즈니스 파트너입니다.</span>
-                </h3>
-                <p data-i18n="comp_desc" class="text-gray-400 text-lg">단순 세금 계산을 넘어, 고객님의 국내 행정적 지위와 신용을 설계합니다.</p>
-            </div>
-            <div class="overflow-hidden border border-white/10 rounded-2xl shadow-2xl bg-navy">
-                <table class="w-full border-collapse">
-                    <thead>
-                        <tr class="bg-white/5">
-                            <th data-i18n="table_h1" class="py-5 px-6 text-left border-b border-white/10 text-gray-300">비교 항목</th>
-                            <th data-i18n="table_h2" class="py-5 px-6 text-center border-b border-white/10 text-gray-500 font-medium">일반 세무법인</th>
-                            <th data-i18n="table_h3" class="py-5 px-6 text-center border-b border-white/10 bg-gold text-navy font-bold">JCNB 솔루션</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-white/5">
-                        <tr>
-                            <td data-i18n="table_r1_c1" class="py-6 px-6 font-bold text-gray-200">주요 목표</td>
-                            <td data-i18n="table_r1_c2" class="py-6 px-6 text-center text-gray-500 italic">단순 세금 신고</td>
-                            <td data-i18n="table_r1_c3" class="py-6 px-6 text-center font-bold text-white bg-white/5">국내 행정 자격 세팅</td>
-                        </tr>
-                        <tr>
-                            <td data-i18n="table_r2_c1" class="py-6 px-6 font-bold text-gray-200">4대 보험 관리</td>
-                            <td data-i18n="table_r2_c2" class="py-6 px-6 text-center text-gray-500 italic">지역가입자 유지</td>
-                            <td data-i18n="table_r2_c3" class="py-6 px-6 text-center font-bold text-white bg-white/5">직장가입자 전환</td>
-                        </tr>
-                        <tr>
-                            <td data-i18n="table_r3_c1" class="py-6 px-6 font-bold text-gray-200">소득 증빙/신용</td>
-                            <td data-i18n="table_r3_c2" class="py-6 px-6 text-center text-gray-500 italic">은행 증빙 불가</td>
-                            <td data-i18n="table_r3_c3" class="py-6 px-6 text-center font-bold text-white bg-white/5">금융권 인정 소득 확보</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section 4: Process (Detailed) -->
-    <section id="process" class="py-24 bg-navy">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h3 data-i18n="nav_process" class="text-3xl font-bold mb-4">프로세스</h3>
-                <div class="w-12 h-1 bg-gold mx-auto"></div>
-            </div>
-            <div class="grid md:grid-cols-4 gap-8">
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-gold text-navy rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6 shadow-lg shadow-gold/20">01</div>
-                    <h5 data-i18n="proc_1_t" class="text-xl font-bold mb-3">상담 및 분석</h5>
-                    <p data-i18n="proc_1_d" class="text-gray-400 text-sm leading-relaxed">해외 계약 구조, 자금 유입 경로, 현재 보험 및 연금 상태를 정밀 진단합니다.</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 border-2 border-gold text-gold rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">02</div>
-                    <h5 data-i18n="proc_2_t" class="text-xl font-bold mb-3">맞춤 전략 설계</h5>
-                    <p data-i18n="proc_2_d" class="text-gray-400 text-sm leading-relaxed">고객님의 소득 규모에 최적화된 사업자 유형과 급여 시나리오를 제안합니다.</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 border-2 border-gold text-gold rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">03</div>
-                    <h5 data-i18n="proc_3_t" class="text-xl font-bold mb-3">행정 인프라 구축</h5>
-                    <p data-i18n="proc_3_d" class="text-gray-400 text-sm leading-relaxed">사업자 등록 대행 및 직장가입자 자격 취득을 통해 경제 기반을 완성합니다.</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 border-2 border-gold text-gold rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">04</div>
-                    <h5 data-i18n="proc_4_t" class="text-xl font-bold mb-3">사후 관리 지원</h5>
-                    <p data-i18n="proc_4_d" class="text-gray-400 text-sm leading-relaxed">정기 소득 신고 관리와 금융권 제출용 소득 증빙 리포트를 1:1 지원합니다.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section 5: FAQ (Rich Content) -->
-    <section id="faq" class="py-24 bg-navy-light">
-        <div class="max-w-4xl mx-auto px-6">
-            <h3 data-i18n="nav_faq" class="text-3xl font-bold mb-12 text-center text-gold">자주 묻는 질문</h3>
-            <div class="space-y-4">
-                <details class="group border border-white/10 rounded-xl bg-navy overflow-hidden" open>
-                    <summary data-i18n="faq_q1" class="flex justify-between items-center p-6 cursor-pointer list-none font-bold text-white hover:bg-white/5 transition-colors">Q. JCNB의 방식은 합법적인가요?</summary>
-                    <div data-i18n="faq_a1" class="px-6 pb-6 text-gray-400 text-sm border-t border-white/5 pt-4 leading-relaxed">A. 네, 100% 합법적입니다. 상법, 세법, 건강보험법 등 현행법의 테두리 안에서 적법한 사업자 구조와 고용 계약을 설계합니다. 우리는 제도의 사각지대에 놓인 분들에게 정당한 행정적 권리를 찾아드리는 전문 에이전시입니다.</div>
-                </details>
-                <details class="group border border-white/10 rounded-xl bg-navy overflow-hidden">
-                    <summary data-i18n="faq_q2" class="flex justify-between items-center p-6 cursor-pointer list-none font-bold text-white hover:bg-white/5 transition-colors">Q. 건강보험료는 실질적으로 얼마나 절감되나요?</summary>
-                    <div data-i18n="faq_a2" class="px-6 pb-6 text-gray-400 text-sm border-t border-white/5 pt-4 leading-relaxed">A. 지역가입자는 소득뿐 아니라 재산까지 점수로 합산되지만, 직장가입자로 전환되면 오직 '급여'를 기준으로 부과됩니다. 고객님의 상황에 따라 다르지만, 평균적으로 기존 대비 50%~80%까지 지출을 줄이실 수 있습니다.</div>
-                </details>
-                <details class="group border border-white/10 rounded-xl bg-navy overflow-hidden">
-                    <summary data-i18n="faq_q3" class="flex justify-between items-center p-6 cursor-pointer list-none font-bold text-white hover:bg-white/5 transition-colors">Q. 소득 증빙이 대출에 정말 도움이 되나요?</summary>
-                    <div data-i18n="faq_a3" class="px-6 pb-6 text-gray-400 text-sm border-t border-white/5 pt-4 leading-relaxed">A. 네, 핵심적인 역할을 합니다. 은행은 정기적인 국내 급여 소득과 4대 보험 가입 이력을 가장 신뢰합니다. JCNB를 통해 원천징수영수증 등의 공식 증빙을 확보함으로써 금융 서비스 이용이 훨씬 원활해집니다.</div>
-                </details>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section 6: CTA Form -->
-    <section id="contact" class="py-24 bg-navy">
-        <div class="max-w-3xl mx-auto px-6">
-            <div class="bg-white p-10 md:p-16 rounded-3xl text-[#0a1128] shadow-2xl border-t-8 border-gold">
-                <h3 data-i18n="form_title" class="text-3xl font-bold mb-8 text-center uppercase tracking-tighter">상담 신청하기</h3>
-                <form id="consultationForm" class="space-y-6">
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label data-i18n="label_name" class="block text-sm font-bold mb-2">성함</label>
-                            <input type="text" name="name" required class="w-full px-4 py-3 border border-gray-300 rounded-md outline-none focus:border-gold">
+            <div class="grid lg:grid-cols-2 gap-8 lg:gap-12">
+                
+                <!-- B2B Card -->
+                <div id="b2b" class="service-card bg-navy-800 rounded-2xl p-8 lg:p-12 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <svg class="w-32 h-32 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2V9h-2V7h8v12zm-2-8h-2v2h2V9zm0 4h-2v2h2v-2z"></path></svg>
+                    </div>
+                    
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="p-3 bg-blue-500/10 rounded-lg">
+                            <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                         </div>
                         <div>
-                            <label data-i18n="label_phone" class="block text-sm font-bold mb-2">연락처</label>
-                            <input type="tel" name="phone" required class="w-full px-4 py-3 border border-gray-300 rounded-md outline-none focus:border-gold" placeholder="010-0000-0000">
+                            <span id="b2b-label" class="text-sm font-semibold text-blue-400 uppercase tracking-wider">For Companies</span>
+                            <h3 id="b2b-title" class="text-2xl font-bold text-white mt-1">Expand to Korea Without the Red Tape</h3>
                         </div>
                     </div>
-                    <button type="submit" id="submitBtn" data-i18n="btn_consult" class="w-full bg-[#0a1128] text-gold py-5 rounded-md font-extrabold text-xl hover:brightness-125 transition-all shadow-lg uppercase">상담 신청하기</button>
-                    <p id="successMessage" data-i18n="success_msg" class="hidden text-center text-green-600 font-bold mt-4">신청이 완료되었습니다!</p>
-                </form>
+
+                    <p id="b2b-desc" class="text-slate-300 mb-8 leading-relaxed h-auto md:h-24">
+                        Hire the best talent in Korea instantly. JCNB acts as your Employer of Record (EOR), handling payroll, taxes, and mandatory social insurances while you focus on your business growth.
+                    </p>
+
+                    <ul class="space-y-4 mb-10 border-t border-slate-700/50 pt-6">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-brand-blue mt-1 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <div>
+                                <strong id="b2b-feat1-title" class="text-white block">EOR & PEO Services</strong>
+                                <span id="b2b-feat1-desc" class="text-sm text-slate-400">Legal employment without establishing a Korean entity.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-brand-blue mt-1 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <div>
+                                <strong id="b2b-feat2-title" class="text-white block">Payroll Management</strong>
+                                <span id="b2b-feat2-desc" class="text-sm text-slate-400">Accurate monthly salary processing and tax withholding.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-brand-blue mt-1 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <div>
+                                <strong id="b2b-feat3-title" class="text-white block">Risk Compliance</strong>
+                                <span id="b2b-feat3-desc" class="text-sm text-slate-400">Full adherence to Korean Labor Standards Act.</span>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <a href="#contact" id="b2b-cta" class="inline-flex justify-center w-full py-3 px-6 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none transition-colors">
+                        Get a Corporate Quote
+                    </a>
+                </div>
+
+                <!-- B2C Card -->
+                <div id="b2c" class="service-card bg-navy-800 rounded-2xl p-8 lg:p-12 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-10">
+                        <svg class="w-32 h-32 text-slate-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"></path></svg>
+                    </div>
+
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="p-3 bg-slate-700/50 rounded-lg">
+                            <svg class="w-8 h-8 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                        </div>
+                        <div>
+                            <span id="b2c-label" class="text-sm font-semibold text-slate-400 uppercase tracking-wider">For Individuals</span>
+                            <h3 id="b2c-title" class="text-2xl font-bold text-white mt-1">Secure Your Financial Status in Korea</h3>
+                        </div>
+                    </div>
+
+                    <p id="b2c-desc" class="text-slate-300 mb-8 leading-relaxed h-auto md:h-24">
+                        Managing foreign income can be complex. JCNB provides a comprehensive solution for income declaration and the acquisition of the "Four Major Social Insurances," ensuring your stability and creditworthiness in Korea.
+                    </p>
+
+                    <ul class="space-y-4 mb-10 border-t border-slate-700/50 pt-6">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-slate-400 mt-1 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <div>
+                                <strong id="b2c-feat1-title" class="text-white block">Premium Income Management</strong>
+                                <span id="b2c-feat1-desc" class="text-sm text-slate-400">Qualification for National Health Insurance & Pension via income verification.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-slate-400 mt-1 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <div>
+                                <strong id="b2c-feat2-title" class="text-white block">Global Tax Filing</strong>
+                                <span id="b2c-feat2-desc" class="text-sm text-slate-400">Expert filing for global comprehensive income tax.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-slate-400 mt-1 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <div>
+                                <strong id="b2c-feat3-title" class="text-white block">Credit Proof Support</strong>
+                                <span id="b2c-feat3-desc" class="text-sm text-slate-400">Transparent income records for loans and visa extensions.</span>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <a href="#contact" id="b2c-cta" class="inline-flex justify-center w-full py-3 px-6 border border-slate-600 rounded-md shadow-sm text-base font-medium text-white hover:bg-slate-700 focus:outline-none transition-colors">
+                        Start Personal Consultation
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Us Section -->
+    <section id="why-us" class="py-24 relative overflow-hidden bg-navy-950">
+        <!-- Decorative Line -->
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent opacity-50"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span id="why-label" class="text-brand-blue font-semibold tracking-wider uppercase text-sm">Our Core Values</span>
+                <h2 id="why-title" class="text-3xl md:text-4xl font-bold text-white mt-2">Why Global Clients Trust JCNB</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="p-8 rounded-xl bg-navy-800/30 border border-slate-800 hover:border-brand-blue/30 transition-colors group">
+                    <div class="w-12 h-12 bg-blue-900/20 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    </div>
+                    <h3 id="val1-title" class="text-xl font-bold text-white mb-2">Customization</h3>
+                    <p id="val1-sub" class="text-sm text-brand-blue font-medium mb-3">Tailored, Not Template</p>
+                    <p id="val1-desc" class="text-slate-400 text-sm leading-relaxed">
+                        Global income and employment situations vary for everyone. We reject "one-size-fits-all" approaches. We analyze your unique circumstances to design the most suitable management structure.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="p-8 rounded-xl bg-navy-800/30 border border-slate-800 hover:border-brand-blue/30 transition-colors group">
+                    <div class="w-12 h-12 bg-blue-900/20 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                    </div>
+                    <h3 id="val2-title" class="text-xl font-bold text-white mb-2">Flexibility</h3>
+                    <p id="val2-sub" class="text-sm text-brand-blue font-medium mb-3">Adaptive Problem Solving</p>
+                    <p id="val2-desc" class="text-slate-400 text-sm leading-relaxed">
+                        Cross-border regulations are complex and rigid. We provide flexible administrative solutions that navigate these complexities, ensuring your business and status in Korea remain secure despite the hurdles.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="p-8 rounded-xl bg-navy-800/30 border border-slate-800 hover:border-brand-blue/30 transition-colors group">
+                    <div class="w-12 h-12 bg-blue-900/20 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </div>
+                    <h3 id="val3-title" class="text-xl font-bold text-white mb-2">Dedicated Support</h3>
+                    <p id="val3-sub" class="text-sm text-brand-blue font-medium mb-3">Human-Centric Management</p>
+                    <p id="val3-desc" class="text-slate-400 text-sm leading-relaxed">
+                        You need more than a software; you need a partner. A dedicated manager will be assigned to you, providing deep, case-by-case consulting and long-term care for your financial stability.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-16 border-t border-white/10 bg-[#050814] text-gray-400 text-sm">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start md:items-center">
-            <div>
-                <h4 class="text-2xl font-bold text-gold mb-4 uppercase">JCNB</h4>
-                <p>(주)제이씨앤비 | 대표. 송정용 | 사업자: 673-86-01868</p>
-                <p>서울시 강남구 논현로85길 35, 6층</p>
+    <footer id="contact" class="bg-black py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <span class="text-2xl font-bold text-white mb-4 block">JCNB<span class="text-brand-blue">.</span></span>
+                    <p id="footer-desc" class="text-slate-400 text-sm max-w-sm mb-4">
+                        Seamless Employment & Tax Compliance for Global Business in Korea.
+                    </p>
+                    <div class="text-slate-500 text-sm space-y-1">
+                        <p>JCNB Co., Ltd.</p>
+                        <p>Address: [Address Input]</p>
+                        <p>Business Registration Number: [Number Input]</p>
+                        <p>Contact: <a href="mailto:support@jcnb.global" class="text-brand-blue hover:underline">support@jcnb.global</a></p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 id="footer-menu-service" class="text-white font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="#b2b" class="hover:text-white transition-colors">EOR & PEO</a></li>
+                        <li><a href="#b2b" class="hover:text-white transition-colors">Payroll</a></li>
+                        <li><a href="#b2c" class="hover:text-white transition-colors">Tax Filing</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 id="footer-menu-legal" class="text-white font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
             </div>
-            <p class="mt-10 md:mt-auto opacity-50 uppercase tracking-widest text-[10px]">© 2024 JCNB HOLDINGS. All Rights Reserved.</p>
+
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-slate-600 text-sm">© 2024 JCNB Co., Ltd. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 
+    <!-- Translation Data & Logic -->
     <script>
         const translations = {
-            ko: {
-                nav_about: "서비스 소개", nav_targets: "대상 유형", nav_process: "프로세스", nav_faq: "FAQ", btn_consult: "상담 신청하기",
-                hero_tag: "해외 소득자 전용 행정 에이전시", hero_title: "해외 소득은 있는데 <br class='hidden md:block'> 국내 직업이 없으신가요?",
-                hero_desc: "프리랜서 건보료 절감부터 고소득자 자산 형성까지. <br> JCNB가 당신의 완벽한 '국내 신분'을 설계해드립니다.", hero_btn: "내 예상 건보료/세금 진단하기",
-                pain_title: "해외 소득자, 이런 고민 있으시죠?", pain_1_t: "건강보험료 폭탄", pain_1_d: "국내 소득 증빙이 없어 지역가입자로 분류되어 과도한 보험료를 납부 중인 경우.",
-                pain_2_t: "대출/카드 발급 거절", pain_2_d: "소득은 높지만 국내 증빙이 불가능해 금융권 활동 및 신용 관리가 안 되는 경우.",
-                pain_3_t: "세무 조사 공포", pain_3_d: "외화 입금 내역은 쌓여가는데 합법적인 자산 증빙 방법을 몰라 세무 조사가 걱정되는 경우.",
-                target_title: "귀하의 상황에 맞는 솔루션을 선택하세요.", target_desc: "JCNB는 각 고객의 소득 구조에 최적화된 시나리오를 제공합니다.",
-                target_a_t: "프리랜서 / 디지털 노마드", target_a_list: "<li class='flex items-start'><span class='text-gold mr-2'>✓</span> 지역가입자 탈출 및 건강보험 직장가입자 취득</li><li class='flex items-start'><span class='text-gold mr-2'>✓</span> 국내 소득 증빙을 통한 신용등급 및 대출 관리</li><li class='flex items-start'><span class='text-gold mr-2'>✓</span> 합법적인 절세 및 1인 기업 행정 대행</li>",
-                target_b_t: "주재원 / 해외 고소득자", target_b_list: "<li class='flex items-start'><span class='text-gold mr-2'>✓</span> 자금 출처 소명 및 해외 자산의 국내 양성화</li><li class='flex items-start'><span class='text-gold mr-2'>✓</span> 국내 부동산 취득을 위한 행정 증빙 기반 마련</li><li class='flex items-start'><span class='text-gold mr-2'>✓</span> 가족 동반 건강보험 혜택 및 연금 관리</li>",
-                comp_title_1: "세무사가 아닙니다.", comp_title_2: "비즈니스 파트너입니다.", comp_desc: "단순 세금 계산을 넘어, 고객님의 국내 행정적 지위와 신용을 설계합니다.",
-                table_h1: "비교 항목", table_h2: "일반 세무법인", table_h3: "JCNB 솔루션", table_r1_c1: "주요 목표", table_r1_c2: "단순 세금 신고", table_r1_c3: "국내 행정 자격 세팅",
-                table_r2_c1: "4대 보험 관리", table_r2_c2: "지역가입자 유지", table_r2_c3: "직장가입자 전환",
-                table_r3_c1: "소득 증빙/신용", table_r3_c2: "은행 증빙 불가", table_r3_c3: "금융권 인정 소득 확보",
-                proc_1_t: "상담 및 분석", proc_1_d: "해외 계약 구조, 자금 유입 경로, 현재 보험 및 연금 상태를 정밀 진단합니다.",
-                proc_2_t: "맞춤 전략 설계", proc_2_d: "고객님의 소득 규모에 최적화된 사업자 유형과 급여 시나리오를 제안합니다.",
-                proc_3_t: "행정 인프라 구축", proc_3_d: "사업자 등록 대행 및 직장가입자 자격 취득을 통해 경제 기반을 완성합니다.",
-                proc_4_t: "사후 관리 지원", proc_4_d: "정기 소득 신고 관리와 금융권 제출용 소득 증빙 리포트를 1:1 지원합니다.",
-                faq_q1: "Q. JCNB의 방식은 합법적인가요?", faq_a1: "A. 네, 100% 합법적입니다. 상법, 세법 등을 준수하여 적법한 사업자 구조를 설계합니다.",
-                faq_q2: "Q. 건보료는 얼마나 절감되나요?", faq_a2: "A. 평균적으로 기존 납부액 대비 50%에서 최대 80%까지 절감이 가능합니다.",
-                faq_q3: "Q. 소득 증빙이 대출에 도움이 되나요?", faq_a3: "A. 네, 정기적인 급여 소득 증빙을 통해 대출 심사 시 필수적인 소득 원천을 확보하게 됩니다.",
-                form_title: "상담 신청하기", label_name: "성함", label_phone: "연락처", success_msg: "신청이 완료되었습니다!"
-            },
             en: {
-                nav_about: "Services", nav_targets: "Target Groups", nav_process: "Process", nav_faq: "FAQ", btn_consult: "Consult Now",
-                hero_tag: "Agency for Overseas Earners", hero_title: "Have Overseas Income <br class='hidden md:block'> but no Local Job in Korea?",
-                hero_desc: "From NHI savings to asset formation. <br> JCNB designs your perfect 'Domestic Identity' in Korea.", hero_btn: "Free Diagnosis",
-                pain_title: "Facing these challenges?", pain_1_t: "NHI Premium Bomb", pain_1_d: "Overpaying premiums as a regional subscriber due to lack of local income proof.",
-                pain_2_t: "Loan Rejection", pain_2_d: "High income but unable to bank or manage credit due to missing domestic documentation.",
-                pain_3_t: "Audit Fear", pain_3_d: "Uncertain how to legally report overseas income and prove asset sources.",
-                target_title: "Choose the solution for your status.", target_desc: "JCNB provides optimized scenarios for each client's income structure.",
-                target_a_t: "Freelancer / Nomad", target_a_list: "<li class='flex items-start'><span class='text-gold mr-2'>✓</span> Switch to Employee Health Insurance</li><li class='flex items-start'><span class='text-gold mr-2'>✓</span> Credit rating management with domestic proof</li><li class='flex items-start'><span class='text-gold mr-2'>✓</span> Legal tax saving and business admin support</li>",
-                target_b_t: "Expat / High Earner", target_b_list: "<li class='flex items-start'><span class='text-gold mr-2'>✓</span> Legalize overseas assets and fund sources</li><li class='flex items-start'><span class='text-gold mr-2'>✓</span> Preparation for Korean real estate acquisition</li><li class='flex items-start'><span class='text-gold mr-2'>✓</span> Benefits for family and pension management</li>",
-                comp_title_1: "More than Accountants.", comp_title_2: "We are Business Partners.", comp_desc: "We design your administrative status and credit, going far beyond simple tax filing.",
-                table_h1: "Comparison", table_h2: "Tax Firms", table_h3: "JCNB Solution", table_r1_c1: "Primary Goal", table_r1_c2: "Simple Tax Filing", table_r1_c3: "Identity Setup",
-                table_r2_c1: "4 Insurances", table_r2_c2: "Regional Subscriber", table_r2_c3: "Employee Subscriber",
-                table_r3_c1: "Income Proof", table_r3_c2: "Bank Rejection", table_r3_c3: "Verified Income",
-                proc_1_t: "Consultation", proc_1_d: "Analyzing overseas contract structure and current insurance/pension status.",
-                proc_2_t: "Strategy Design", proc_2_d: "Suggesting optimal business types and salary simulations for your income.",
-                proc_3_t: "Infrastructure", proc_3_d: "Executing business registration and acquiring employee insurance status.",
-                proc_4_t: "Support", proc_4_d: "Providing periodic income reports and documentation for banking support.",
-                faq_q1: "Q. Is JCNB's method legal?", faq_a1: "A. Yes, 100%. We design compliant structures under Korean Commercial and Tax law.",
-                faq_q2: "Q. How much can I save on NHI?", faq_a2: "A. On average, you can save 50% to 80% compared to regional subscriber rates.",
-                faq_q3: "Q. Does it help with loans?", faq_a3: "A. Yes, domestic payroll proof is crucial for credit approval and mortgage screening.",
-                form_title: "Consultation Form", label_name: "Name", label_phone: "Phone", success_msg: "Successfully Submitted!"
+                nav: { services: "Services", why: "Why Us", contact: "Contact Us" },
+                hero: {
+                    title: "Your Strategic Partner for Korea:<br/><span class='text-brand-blue'>Seamless Employment & Tax Compliance</span>",
+                    subtitle: "We empower global companies to hire talent in Korea without a local entity, and manage foreign income for individuals with bespoke solutions.",
+                    ctaB2b: "For Companies (B2B)",
+                    ctaB2c: "For Individuals (B2C)"
+                },
+                services: {
+                    title: "Our Expertise",
+                    b2b: {
+                        label: "For Companies",
+                        title: "Expand to Korea Without the Red Tape",
+                        desc: "Hire the best talent in Korea instantly. JCNB acts as your Employer of Record (EOR), handling payroll, taxes, and mandatory social insurances while you focus on your business growth.",
+                        feat1: { title: "EOR & PEO Services", desc: "Legal employment without establishing a Korean entity." },
+                        feat2: { title: "Payroll Management", desc: "Accurate monthly salary processing and tax withholding." },
+                        feat3: { title: "Risk Compliance", desc: "Full adherence to Korean Labor Standards Act." },
+                        cta: "Get a Corporate Quote"
+                    },
+                    b2c: {
+                        label: "For Individuals",
+                        title: "Secure Your Financial Status in Korea",
+                        desc: "Managing foreign income can be complex. JCNB provides a comprehensive solution for income declaration and the acquisition of the 'Four Major Social Insurances,' ensuring your stability and creditworthiness in Korea.",
+                        feat1: { title: "Premium Income Management", desc: "Qualification for National Health Insurance & Pension via income verification." },
+                        feat2: { title: "Global Tax Filing", desc: "Expert filing for global comprehensive income tax." },
+                        feat3: { title: "Credit Proof Support", desc: "Transparent income records for loans and visa extensions." },
+                        cta: "Start Personal Consultation"
+                    }
+                },
+                why: {
+                    label: "Our Core Values",
+                    title: "Why Global Clients Trust JCNB",
+                    v1: { title: "Customization", sub: "Tailored, Not Template", desc: "Global income and employment situations vary for everyone. We reject 'one-size-fits-all' approaches. We analyze your unique circumstances to design the most suitable management structure." },
+                    v2: { title: "Flexibility", sub: "Adaptive Problem Solving", desc: "Cross-border regulations are complex and rigid. We provide flexible administrative solutions that navigate these complexities, ensuring your business and status in Korea remain secure despite the hurdles." },
+                    v3: { title: "Dedicated Support", sub: "Human-Centric Management", desc: "You need more than a software; you need a partner. A dedicated manager will be assigned to you, providing deep, case-by-case consulting and long-term care for your financial stability." }
+                },
+                footer: {
+                    desc: "Seamless Employment & Tax Compliance for Global Business in Korea.",
+                    menuService: "Services",
+                    menuLegal: "Legal"
+                }
+            },
+            ko: {
+                nav: { services: "서비스", why: "핵심가치", contact: "문의하기" },
+                hero: {
+                    title: "한국 비즈니스를 위한 전략적 파트너:<br/><span class='text-brand-blue'>완벽한 고용 및 세무 컴플라이언스</span>",
+                    subtitle: "우리는 글로벌 기업이 현지 법인 없이 한국 인재를 채용할 수 있도록 돕고, 개인의 해외 소득을 위한 맞춤형 관리 솔루션을 제공합니다.",
+                    ctaB2b: "기업 고객 (B2B)",
+                    ctaB2c: "개인 고객 (B2C)"
+                },
+                services: {
+                    title: "서비스 분야",
+                    b2b: {
+                        label: "기업 고객",
+                        title: "복잡한 행정 절차 없는 한국 시장 진출",
+                        desc: "한국 최고의 인재를 즉시 채용하세요. JCNB가 귀하의 명목상 고용주(EOR)가 되어 급여, 세금, 4대보험을 처리하는 동안 귀사는 비즈니스 성장에만 집중하십시오.",
+                        feat1: { title: "EOR & PEO 서비스", desc: "한국 법인 설립 없이 진행하는 합법적 고용 솔루션." },
+                        feat2: { title: "급여 관리 (Payroll)", desc: "정확한 매월 급여 처리 및 원천세 신고 관리." },
+                        feat3: { title: "리스크 관리", desc: "한국 근로기준법 및 관련 규정 완벽 준수." },
+                        cta: "기업 견적 문의하기"
+                    },
+                    b2c: {
+                        label: "개인 고객",
+                        title: "한국 내 재정적 지위와 신용 확보",
+                        desc: "해외 소득 관리는 복잡할 수 있습니다. JCNB는 소득 신고와 '4대보험' 취득을 위한 포괄적인 솔루션을 제공하여 귀하의 한국 내 안정성과 신용도를 보장합니다.",
+                        feat1: { title: "프리미엄 소득 관리", desc: "소득 증빙을 통한 건강보험 및 국민연금 직장가입 자격 확보." },
+                        feat2: { title: "글로벌 세무 신고", desc: "해외 소득을 포함한 글로벌 종합소득세 전문 신고." },
+                        feat3: { title: "신용 증빙 지원", desc: "대출 및 비자 연장을 위한 투명한 소득 기록 관리." },
+                        cta: "개인 컨설팅 시작하기"
+                    }
+                },
+                why: {
+                    label: "핵심 가치",
+                    title: "글로벌 고객이 JCNB를 신뢰하는 이유",
+                    v1: { title: "맞춤형 설계 (Customization)", sub: "템플릿이 아닌, 고객 중심 설계", desc: "글로벌 소득과 고용 상황은 모두 다릅니다. 우리는 기계적인 일괄 처리를 거부합니다. 귀하의 고유한 상황을 정밀 분석하여 가장 적합한 관리 구조를 설계합니다." },
+                    v2: { title: "유연성 (Flexibility)", sub: "능동적인 문제 해결", desc: "국경 간 규제는 복잡하고 경직되어 있습니다. 우리는 이러한 난관 속에서도 귀하의 한국 내 비즈니스와 신분이 안전하게 유지될 수 있도록 유연한 행정 솔루션을 제공합니다." },
+                    v3: { title: "전담 지원 (Dedicated Support)", sub: "사람 중심의 매니지먼트", desc: "귀하에게 필요한 것은 단순한 소프트웨어가 아니라 파트너입니다. 전담 매니저가 배정되어, 깊이 있는 케이스별 컨설팅과 장기적인 재정 안정을 지원합니다." }
+                },
+                footer: {
+                    desc: "글로벌 비즈니스를 위한 한국 고용 및 세무 파트너.",
+                    menuService: "서비스",
+                    menuLegal: "법적 고지"
+                }
+            },
+            ja: {
+                nav: { services: "サービス", why: "選ばれる理由", contact: "お問い合わせ" },
+                hero: {
+                    title: "韓国ビジネスにおける戦略的パートナー:<br/><span class='text-brand-blue'>シームレスな雇用と税務コンプライアンス</span>",
+                    subtitle: "現地法人の設立なしで韓国の人材を雇用し、個人の海外所得に対するオーダーメイドの管理ソリューションを提供します。",
+                    ctaB2b: "法人のお客様 (B2B)",
+                    ctaB2c: "個人のお客様 (B2C)"
+                },
+                services: {
+                    title: "専門分野",
+                    b2b: {
+                        label: "法人のお客様",
+                        title: "煩雑な手続き不要で韓国市場へ進出",
+                        desc: "韓国の優秀な人材を即座に採用可能です。JCNBがEOR（雇用代行）として給与計算、税務、社会保険業務を代行するため、貴社はビジネスの成長に集中できます。",
+                        feat1: { title: "EOR & PEO サービス", desc: "韓国法人設立不要の合法的雇用ソリューション。" },
+                        feat2: { title: "給与計算 (Payroll)", desc: "毎月の正確な給与処理および源泉徴収管理。" },
+                        feat3: { title: "リスク・コンプライアンス", desc: "韓国労働基準法および関連法規の完全遵守。" },
+                        cta: "法人見積もりを依頼"
+                    },
+                    b2c: {
+                        label: "個人のお客様",
+                        title: "韓国での財政的地位と信用の確保",
+                        desc: "海外所得の管理は複雑です。JCNBは所得申告および「4大社会保険」加入のための包括的ソリューションを提供し、韓国での安定性と信用度を保証します。",
+                        feat1: { title: "プレミアム所得管理", desc: "所得証明を通じた国民健康保険および国民年金の資格取得。" },
+                        feat2: { title: "グローバル税務申告", desc: "海外所得を含むグローバル総合所得税の専門申告。" },
+                        feat3: { title: "信用証明サポート", desc: "ローンやビザ延長のための透明な所得記録管理。" },
+                        cta: "個人コンサルティングを開始"
+                    }
+                },
+                why: {
+                    label: "コアバリュー",
+                    title: "グローバル顧客がJCNBを信頼する理由",
+                    v1: { title: "カスタマイズ (Customization)", sub: "テンプレートではなく、最適解を", desc: "グローバルな所得と雇用状況は千差万別です。画一的な処理ではなく、お客様固有の状況を精密に分析し、最適な管理構造を設計します。" },
+                    v2: { title: "柔軟性 (Flexibility)", sub: "適応力のある問題解決", desc: "国境を越える規制は複雑で厳格です。私たちは障害があっても韓国でのビジネスと身分が安全に維持されるよう、柔軟な行政ソリューションを提供します。" },
+                    v3: { title: "専任サポート (Dedicated Support)", sub: "人間中心のマネジメント", desc: "必要なのはソフトウェアではなくパートナーです。専任マネージャーが配置され、ケース別の深いコンサルティングと長期的な財政安定を支援します。" }
+                },
+                footer: {
+                    desc: "韓国ビジネスのための雇用および税務コンプライアンス。",
+                    menuService: "サービス",
+                    menuLegal: "法的通知"
+                }
+            },
+            zh: {
+                nav: { services: "服务项目", why: "核心价值", contact: "联系我们" },
+                hero: {
+                    title: "韩国业务的战略合作伙伴:<br/><span class='text-brand-blue'>无缝衔接的雇佣与税务合规</span>",
+                    subtitle: "我们协助全球企业在无实体情况下雇佣韩国人才，并为个人提供量身定制的海外收入管理方案。",
+                    ctaB2b: "企业客户 (B2B)",
+                    ctaB2c: "个人客户 (B2C)"
+                },
+                services: {
+                    title: "专业领域",
+                    b2b: {
+                        label: "企业客户",
+                        title: "零繁琐手续，拓展韩国市场",
+                        desc: "即刻聘用韩国顶尖人才。JCNB作为您的名义雇主(EOR)，处理薪资、税务及法定四大保险，助您专注于业务增长。",
+                        feat1: { title: "EOR & PEO 服务", desc: "无需设立韩国法人的合法雇佣解决方案。" },
+                        feat2: { title: "薪酬管理 (Payroll)", desc: "精准的每月薪资处理及代扣代缴税款。" },
+                        feat3: { title: "合规风险管理", desc: "完全遵守韩国劳动基准法及相关法规。" },
+                        cta: "获取企业报价"
+                    },
+                    b2c: {
+                        label: "个人客户",
+                        title: "确保在韩财务地位与信用",
+                        desc: "海外收入管理往往复杂繁琐。JCNB提供收入申报及“四大保险”获取的一站式解决方案，保障您在韩国的稳定生活与信用。",
+                        feat1: { title: "高级收入管理", desc: "通过收入证明获取国民健康保险及国民年金资格。" },
+                        feat2: { title: "全球税务申报", desc: "包含海外收入的全球综合所得税专业申报。" },
+                        feat3: { title: "信用证明支持", desc: "为贷款及签证延期提供透明的收入记录管理。" },
+                        cta: "开始个人咨询"
+                    }
+                },
+                why: {
+                    label: "核心价值",
+                    title: "全球客户信赖 JCNB 的理由",
+                    v1: { title: "量身定制 (Customization)", sub: "拒绝模板化，专注个性化", desc: "每个人的全球收入与雇佣状况各不相同。我们拒绝“一刀切”的处理方式，精确分析您的独特情况，设计最合适的管理架构。" },
+                    v2: { title: "灵活应变 (Flexibility)", sub: "适应性问题解决", desc: "跨境法规复杂且严格。我们提供灵活的行政解决方案，助您在重重难关中确保韩国业务与身份的安全。" },
+                    v3: { title: "专人支持 (Dedicated Support)", sub: "以人为本的管理", desc: "您需要的不仅仅是软件，而是合作伙伴。我们将为您分配专属经理，提供深入的个案咨询，确保持续的财务稳定。" }
+                },
+                footer: {
+                    desc: "助力全球企业在韩实现无缝雇佣与税务合规。",
+                    menuService: "服务",
+                    menuLegal: "法律声明"
+                }
             }
         };
 
-        function changeLanguage(lang) {
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                el.innerHTML = translations[lang][key];
-            });
-            document.getElementById('lang-ko').classList.toggle('active', lang === 'ko');
-            document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+        function setLanguage(lang) {
+            const data = translations[lang];
+            
+            // Navbar
+            document.getElementById('nav-services').textContent = data.nav.services;
+            document.getElementById('nav-why').textContent = data.nav.why;
+            document.getElementById('nav-contact').textContent = data.nav.contact;
+            document.getElementById('nav-services-m').textContent = data.nav.services;
+            document.getElementById('nav-why-m').textContent = data.nav.why;
+            document.getElementById('nav-contact-m').textContent = data.nav.contact;
+
+            // Hero
+            document.getElementById('hero-title').innerHTML = data.hero.title;
+            document.getElementById('hero-subtitle').textContent = data.hero.subtitle;
+            document.getElementById('hero-cta-b2b').textContent = data.hero.ctaB2b;
+            document.getElementById('hero-cta-b2c').textContent = data.hero.ctaB2c;
+
+            // Services
+            document.getElementById('section-expertise-title').textContent = data.services.title;
+            
+            // B2B
+            document.getElementById('b2b-label').textContent = data.services.b2b.label;
+            document.getElementById('b2b-title').textContent = data.services.b2b.title;
+            document.getElementById('b2b-desc').textContent = data.services.b2b.desc;
+            document.getElementById('b2b-feat1-title').textContent = data.services.b2b.feat1.title;
+            document.getElementById('b2b-feat1-desc').textContent = data.services.b2b.feat1.desc;
+            document.getElementById('b2b-feat2-title').textContent = data.services.b2b.feat2.title;
+            document.getElementById('b2b-feat2-desc').textContent = data.services.b2b.feat2.desc;
+            document.getElementById('b2b-feat3-title').textContent = data.services.b2b.feat3.title;
+            document.getElementById('b2b-feat3-desc').textContent = data.services.b2b.feat3.desc;
+            document.getElementById('b2b-cta').textContent = data.services.b2b.cta;
+
+            // B2C
+            document.getElementById('b2c-label').textContent = data.services.b2c.label;
+            document.getElementById('b2c-title').textContent = data.services.b2c.title;
+            document.getElementById('b2c-desc').textContent = data.services.b2c.desc;
+            document.getElementById('b2c-feat1-title').textContent = data.services.b2c.feat1.title;
+            document.getElementById('b2c-feat1-desc').textContent = data.services.b2c.feat1.desc;
+            document.getElementById('b2c-feat2-title').textContent = data.services.b2c.feat2.title;
+            document.getElementById('b2c-feat2-desc').textContent = data.services.b2c.feat2.desc;
+            document.getElementById('b2c-feat3-title').textContent = data.services.b2c.feat3.title;
+            document.getElementById('b2c-feat3-desc').textContent = data.services.b2c.feat3.desc;
+            document.getElementById('b2c-cta').textContent = data.services.b2c.cta;
+
+            // Why Us
+            document.getElementById('why-label').textContent = data.why.label;
+            document.getElementById('why-title').textContent = data.why.title;
+            document.getElementById('val1-title').textContent = data.why.v1.title;
+            document.getElementById('val1-sub').textContent = data.why.v1.sub;
+            document.getElementById('val1-desc').textContent = data.why.v1.desc;
+            document.getElementById('val2-title').textContent = data.why.v2.title;
+            document.getElementById('val2-sub').textContent = data.why.v2.sub;
+            document.getElementById('val2-desc').textContent = data.why.v2.desc;
+            document.getElementById('val3-title').textContent = data.why.v3.title;
+            document.getElementById('val3-sub').textContent = data.why.v3.sub;
+            document.getElementById('val3-desc').textContent = data.why.v3.desc;
+
+            // Footer
+            document.getElementById('footer-desc').textContent = data.footer.desc;
+            document.getElementById('footer-menu-service').textContent = data.footer.menuService;
+            document.getElementById('footer-menu-legal').textContent = data.footer.menuLegal;
+
+            // Update Active Button State
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            if(document.getElementById(`btn-${lang}`)) document.getElementById(`btn-${lang}`).classList.add('active');
+            if(document.getElementById(`btn-${lang}-m`)) document.getElementById(`btn-${lang}-m`).classList.add('active');
         }
 
-        const scriptURL = 'INSERT_URL_HERE'; 
-        const form = document.getElementById('consultationForm');
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-            const btn = document.getElementById('submitBtn');
-            btn.disabled = true;
-            btn.innerText = "Processing...";
-            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-                .then(response => {
-                    btn.classList.add('hidden');
-                    document.getElementById('successMessage').classList.remove('hidden');
-                })
-                .catch(error => { alert('Error!'); btn.disabled = false; btn.innerText = "Retry"; });
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
         });
+
+        // Initialize with English
+        setLanguage('en');
     </script>
 </body>
 </html>
