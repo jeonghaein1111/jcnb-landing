@@ -119,7 +119,6 @@
     </nav>
 
     <!-- Hero Section -->
-    <!-- Modified: Changed min-h-screen to min-h-[85vh] and reduced padding-bottom to decrease gap -->
     <header class="relative min-h-[85vh] flex items-center justify-center pt-24 pb-12">
         <div class="absolute inset-0 z-0">
             <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop" 
@@ -144,10 +143,13 @@
             </p>
 
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <!-- B2B Button -->
                 <a href="#b2b" id="hero-cta-b2b" class="px-8 py-4 text-base font-semibold text-white bg-brand-blue rounded-lg hover:bg-blue-600 transition-all shadow-lg shadow-blue-900/50">
                     For Companies (B2B)
                 </a>
-                <a href="#b2c" id="hero-cta-b2c" class="px-8 py-4 text-base font-semibold text-white bg-slate-800 border border-slate-700 rounded-lg hover:bg-slate-700 transition-all">
+                
+                <!-- B2C Button (Updated to match B2B Style) -->
+                <a href="#b2c" id="hero-cta-b2c" class="px-8 py-4 text-base font-semibold text-white bg-brand-blue rounded-lg hover:bg-blue-600 transition-all shadow-lg shadow-blue-900/50">
                     For Individuals (B2C)
                 </a>
             </div>
@@ -155,7 +157,6 @@
     </header>
 
     <!-- Services Section -->
-    <!-- Modified: Reduced padding-top from py-24 to py-16 to pull section up -->
     <section id="services" class="py-16 bg-navy-900 relative">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="text-center mb-12">
@@ -163,10 +164,9 @@
                 <div class="w-16 h-1 bg-brand-blue mx-auto mt-4 rounded-full"></div>
             </div>
 
-            <!-- Modified: Removed asymmetry between B2B and B2C cards. Both now identical in style. -->
             <div class="grid lg:grid-cols-2 gap-8 lg:gap-10">
                 
-                <!-- B2B Card -->
+                <!-- B2B Card (Corporate) -->
                 <div id="b2b" class="service-card rounded-2xl p-8 lg:p-12 relative overflow-hidden group">
                     <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                         <svg class="w-32 h-32 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2V9h-2V7h8v12zm-2-8h-2v2h2V9zm0 4h-2v2h2v-2z"></path></svg>
@@ -215,8 +215,7 @@
                     </a>
                 </div>
 
-                <!-- B2C Card -->
-                <!-- Modified: Removed 'border-t-4 border-slate-600' to match B2B styling exactly -->
+                <!-- B2C Card (Individual) -->
                 <div id="b2c" class="service-card rounded-2xl p-8 lg:p-12 relative overflow-hidden group">
                     <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                         <svg class="w-32 h-32 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"></path></svg>
