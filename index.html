@@ -60,18 +60,8 @@
             box-shadow: 0 10px 40px -10px rgba(59, 130, 246, 0.15);
         }
 
-        .form-input {
-            background-color: rgba(30, 41, 59, 0.5);
-            border: 1px solid rgba(148, 163, 184, 0.1);
-            color: white;
-            transition: all 0.2s;
-        }
-        .form-input:focus {
-            border-color: #3b82f6;
-            outline: none;
-            background-color: rgba(30, 41, 59, 0.8);
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
-        }
+        .lang-btn.active { color: #3b82f6; font-weight: 700; }
+        .lang-btn:hover { color: #60a5fa; }
 
         /* Dropdown Styles */
         #lang-dropdown {
@@ -98,6 +88,7 @@
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#services" id="nav-services" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Services</a>
                     <a href="#why-us" id="nav-why" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Why Us</a>
+                    <!-- Contact Link points to Footer now -->
                     <a href="#contact" id="nav-contact" class="px-5 py-2.5 text-sm font-medium text-white bg-brand-blue hover:bg-blue-600 rounded-full transition-colors shadow-lg shadow-blue-900/50">Contact Us</a>
                     
                     <!-- Language Dropdown Wrapper -->
@@ -290,7 +281,7 @@
     </section>
 
     <!-- Why Us Section -->
-    <section id="why-us" class="py-24 relative overflow-hidden bg-navy-950">
+    <section id="why-us" class="py-24 relative overflow-hidden bg-navy-950 border-b border-slate-800">
         <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent opacity-50"></div>
         
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
@@ -336,67 +327,9 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-24 bg-navy-900 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8">
-            <div class="grid md:grid-cols-2 gap-16 items-start">
-                <div>
-                    <h2 id="contact-title" class="text-3xl font-bold text-white mb-6">Get In Touch</h2>
-                    <p id="contact-desc" class="text-slate-400 mb-8 leading-relaxed">
-                        Ready to optimize your global HR and tax strategy? Fill out the form, and our expert team will get back to you within 24 hours.
-                    </p>
-                    
-                    <div class="space-y-6">
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-blue-900/20 flex items-center justify-center text-brand-blue">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                            </div>
-                            <div class="ml-4">
-                                <p class="text-white font-medium">Email</p>
-                                <a href="mailto:tax0623@naver.com" class="text-slate-400 hover:text-brand-blue transition-colors">tax0623@naver.com</a>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-blue-900/20 flex items-center justify-center text-brand-blue">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                            </div>
-                            <div class="ml-4">
-                                <p class="text-white font-medium">Address</p>
-                                <p id="contact-address" class="text-slate-400">35, Nonhyeon-ro 85-gil, Gangnam-gu, Seoul, Republic of Korea</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-navy-800 p-8 rounded-2xl border border-slate-700 shadow-xl">
-                    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="space-y-6">
-                        <div>
-                            <label for="name" id="label-name" class="block text-sm font-medium text-slate-300 mb-2">Full Name</label>
-                            <input type="text" name="name" id="name" required class="form-input w-full px-4 py-3 rounded-lg text-sm" placeholder="Your Name">
-                        </div>
-                        
-                        <div>
-                            <label for="email" id="label-email" class="block text-sm font-medium text-slate-300 mb-2">Email Address</label>
-                            <input type="email" name="email" id="email" required class="form-input w-full px-4 py-3 rounded-lg text-sm" placeholder="you@company.com">
-                        </div>
-
-                        <div>
-                            <label for="message" id="label-message" class="block text-sm font-medium text-slate-300 mb-2">Message</label>
-                            <textarea name="message" id="message" rows="4" required class="form-input w-full px-4 py-3 rounded-lg text-sm" placeholder="How can we help you?"></textarea>
-                        </div>
-
-                        <button type="submit" id="btn-submit" class="w-full bg-brand-blue text-white font-semibold py-3.5 rounded-lg hover:bg-blue-600 transition-all shadow-lg shadow-blue-900/20">
-                            Send Message
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="footer" class="bg-black py-12 border-t border-slate-800">
+    <!-- Footer / Contact Info -->
+    <!-- Changed ID to 'contact' so links scroll here -->
+    <footer id="contact" class="bg-black py-12">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="grid md:grid-cols-4 gap-8 mb-12">
                 <div class="col-span-1 md:col-span-2">
@@ -489,15 +422,6 @@
                     v2: { title: "Flexibility", sub: "Adaptive Problem Solving", desc: "Cross-border regulations are complex and rigid. We provide flexible administrative solutions that navigate these complexities, ensuring your business and status in Korea remain secure despite the hurdles." },
                     v3: { title: "Dedicated Support", sub: "Human-Centric Management", desc: "You need more than a software; you need a partner. A dedicated manager will be assigned to you, providing deep, case-by-case consulting and long-term care for your financial stability." }
                 },
-                contact: {
-                    title: "Get In Touch",
-                    desc: "Ready to optimize your global HR and tax strategy? Fill out the form, and our expert team will get back to you within 24 hours.",
-                    labelName: "Full Name",
-                    labelEmail: "Email Address",
-                    labelMsg: "Message",
-                    btn: "Send Message",
-                    address: "35, Nonhyeon-ro 85-gil, Gangnam-gu, Seoul, Republic of Korea"
-                },
                 footer: {
                     desc: "Seamless Employment & Tax Compliance for Global Business in Korea.",
                     menuService: "Services",
@@ -541,15 +465,6 @@
                     v1: { title: "맞춤형 설계 (Customization)", sub: "템플릿이 아닌, 고객 중심 설계", desc: "글로벌 소득과 고용 상황은 모두 다릅니다. 우리는 기계적인 일괄 처리를 거부합니다. 귀하의 고유한 상황을 정밀 분석하여 가장 적합한 관리 구조를 설계합니다." },
                     v2: { title: "유연성 (Flexibility)", sub: "능동적인 문제 해결", desc: "국경 간 규제는 복잡하고 경직되어 있습니다. 우리는 이러한 난관 속에서도 귀하의 한국 내 비즈니스와 신분이 안전하게 유지될 수 있도록 유연한 행정 솔루션을 제공합니다." },
                     v3: { title: "전담 지원 (Dedicated Support)", sub: "사람 중심의 매니지먼트", desc: "귀하에게 필요한 것은 단순한 소프트웨어가 아니라 파트너입니다. 전담 매니저가 배정되어, 깊이 있는 케이스별 컨설팅과 장기적인 재정 안정을 지원합니다." }
-                },
-                contact: {
-                    title: "문의하기",
-                    desc: "글로벌 HR 및 세무 전략을 최적화할 준비가 되셨나요? 양식을 작성해주시면 전문가 팀이 24시간 이내에 답변 드립니다.",
-                    labelName: "성함",
-                    labelEmail: "이메일 주소",
-                    labelMsg: "문의 내용",
-                    btn: "메시지 보내기",
-                    address: "서울시 강남구 논현로85길 35"
                 },
                 footer: {
                     desc: "글로벌 비즈니스를 위한 한국 고용 및 세무 파트너.",
@@ -595,15 +510,6 @@
                     v2: { title: "柔軟性 (Flexibility)", sub: "適応力のある問題解決", desc: "国境を越える規制は複雑で厳格です。私たちは障害があっても韓国でのビジネスと身分が安全に維持されるよう、柔軟な行政ソリューションを提供します。" },
                     v3: { title: "専任サポート (Dedicated Support)", sub: "人間中心のマネジメント", desc: "必要なのはソフトウェアではなくパートナーです。専任マネージャーが配置され、ケース別の深いコンサルティングと長期的な財政安定を支援します。" }
                 },
-                contact: {
-                    title: "お問い合わせ",
-                    desc: "グローバルHRと税務戦略を最適化する準備はできましたか？フォームにご記入いただければ、専門チームが24時間以内にご連絡いたします。",
-                    labelName: "お名前",
-                    labelEmail: "メールアドレス",
-                    labelMsg: "お問い合わせ内容",
-                    btn: "送信する",
-                    address: "ソウル市江南区論峴路85ギル35"
-                },
                 footer: {
                     desc: "韓国ビジネスのための雇用および税務コンプライアンス。",
                     menuService: "サービス",
@@ -647,15 +553,6 @@
                     v1: { title: "量身定制 (Customization)", sub: "拒绝模板化，专注个性化", desc: "每个人的全球收入与雇佣状况各不相同。我们拒绝“一刀切”的处理方式，精确分析您的独特情况，设计最合适的管理架构。" },
                     v2: { title: "灵活应变 (Flexibility)", sub: "适应性问题解决", desc: "跨境法规复杂且严格。我们提供灵活的行政解决方案，助您在重重难关中确保韩国业务与身份的安全。" },
                     v3: { title: "专人支持 (Dedicated Support)", sub: "以人为本的管理", desc: "您需要的不仅仅是软件，而是合作伙伴。我们将为您分配专属经理，提供深入的个案咨询，确保持续的财务稳定。" }
-                },
-                contact: {
-                    title: "联系我们",
-                    desc: "准备好优化您的全球人力资源和税务策略了吗？请填写表格，我们的专家团队将在24小时内回复您。",
-                    labelName: "姓名",
-                    labelEmail: "电子邮箱",
-                    labelMsg: "留言内容",
-                    btn: "发送信息",
-                    address: "首尔市江南区论岘路85街35"
                 },
                 footer: {
                     desc: "助力全球企业在韩实现无缝雇佣与税务合规。",
@@ -726,15 +623,6 @@
             document.getElementById('val3-title').textContent = data.why.v3.title;
             document.getElementById('val3-sub').textContent = data.why.v3.sub;
             document.getElementById('val3-desc').textContent = data.why.v3.desc;
-
-            // Contact Form
-            document.getElementById('contact-title').textContent = data.contact.title;
-            document.getElementById('contact-desc').textContent = data.contact.desc;
-            document.getElementById('label-name').textContent = data.contact.labelName;
-            document.getElementById('label-email').textContent = data.contact.labelEmail;
-            document.getElementById('label-message').textContent = data.contact.labelMsg;
-            document.getElementById('btn-submit').textContent = data.contact.btn;
-            document.getElementById('contact-address').textContent = data.contact.address;
 
             // Footer
             document.getElementById('footer-desc').textContent = data.footer.desc;
